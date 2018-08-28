@@ -19,6 +19,15 @@ atdownload({
      },
     */
 
+    // Write only the content of these tables to JSON,
+    // all other tables will still be saved as CSV
+
+    /*
+    writeToJson: [
+        'meta'
+    ],
+*/
+
     tables: [
         'meta',
         'blocks'

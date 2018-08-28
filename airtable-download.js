@@ -14,6 +14,7 @@ const defaultOpts = {
     csvPath: false,
     skipExistingFiles: true,
     prettifyJson: false,
+    writeToJson : false
 };
 
 class AirtableDownload {
@@ -27,6 +28,7 @@ class AirtableDownload {
         this.tableIndex = 0;
         this.tables = opts.tables;
         this.tableCount = opts.tables.length;
+        this.writeToJson = opts.writeToJson;
     }
 
     fileExists(filename, callback) {
@@ -121,7 +123,21 @@ class AirtableDownload {
     }
 
     writeBook() {
-        let bookJson = this.stringifyJson(this.book);
+        let book = {};
+
+        //limit data in JSON file to tables in writeToJson
+        if(this.opts.writeToJson && this.opts.writeToJson.length){
+
+            book = {};
+            this.opts.writeToJson.forEach(table => {
+                book[table] = this.book[table];
+            });
+        }
+        else{
+           book = this.book;
+        }
+
+        let bookJson = this.stringifyJson(book);
 
         return new Promise((resolve, reject) => {
             fs.writeFile(this.opts.dataPath, bookJson, 'utf-8', (err, written) => {
