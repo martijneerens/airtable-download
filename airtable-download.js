@@ -66,10 +66,11 @@ class AirtableDownload {
             let hasExtension = false;
 
             //check if no extension available
-            if(filename.indexOf('.jpg') >-1
-                || filename.indexOf('.png') >-1
-                || filename.indexOf('.gif') >-1
-                || filename.indexOf('.jpeg') >-1){
+            let lastPart = filename.split('.').slice(-1)[0];
+            if( lastPart == 'jpg'
+                || lastPart == 'png'
+                || lastPart == 'png'
+                || lastPart == 'jpeg'){
                 hasExtension = true;
             }
 
