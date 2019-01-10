@@ -59,7 +59,24 @@ class AirtableDownload {
 
             // We've got a media attachment, transform to something
             // new, and add the old url to the book
-            const filename = externalUrl.split('/').slice(-1);
+            let filename = externalUrl.split('/').slice(-1);
+            const originalFilename = field[0].filename;
+            const originalExtension = originalFilename.split('.').slice(-1)[0];
+
+            let hasExtension = false;
+
+            //check if no extension available
+            if(filename.indexOf('.jpg') >-1
+                || filename.indexOf('.png') >-1
+                || filename.indexOf('.gif') >-1
+                || filename.indexOf('.jpeg') >-1){
+                hasExtension = true;
+            }
+
+            if(!hasExtension){
+                filename += '.' + originalExtension;
+            }
+
             const localPath = `${this.opts.mediaPath}${filename}`;
             const localBookPath = `${this.opts.mediaBookPath}${filename}`;
 
